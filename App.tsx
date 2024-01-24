@@ -1,12 +1,16 @@
+import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import {Text} from 'react-native';
+import { Text } from 'react-native';
+import Navigator from './src/navigation/Navigator';
 
 const App = () => {
-  return (
-    <>
-      <Text>AppScreen</Text>
-    </>
-  );
+	return (
+		<>
+			<NavigationContainer>
+				<Navigator />
+			</NavigationContainer>
+		</>
+	);
 };
 
 export default App;
