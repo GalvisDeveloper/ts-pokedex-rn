@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Image, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native';
 import { SimplePokemon } from '../interfaces/pokemonInterfaces';
 import FadeInImage from './FadeInImage';
+import { getImageColors } from '../helpers/getColors.';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 interface Props {
 	pokemon: SimplePokemon;
@@ -11,12 +14,34 @@ interface Props {
 const PokemonCard = ({ pokemon }: Props) => {
 	const { width: screenX } = useWindowDimensions();
 
+	const [bgColor, setBgColor] = useState('#1c5386');
+
+	const isMounted = useRef(true);
+
+	const navigator = useNavigation<StackNavigationProp<any, any>>();
+
+	useEffect(() => {
+		getCardColors();
+
+		return () => {
+			isMounted.current = false;
+		};
+	}, []);
+
+	const getCardColors = async () => {
+		if (!isMounted.current) return;
+		const [primary] = await getImageColors(pokemon.picture);
+		if (!primary) return;
+		setBgColor(primary);
+	};
+
 	return (
-		<TouchableOpacity>
+		<TouchableOpacity activeOpacity={0.9} onPress={() => navigator.navigate('Pokemon', { simplePokemon: pokemon, color: bgColor })}>
 			<View
 				style={{
 					...localStyles.cardCt,
 					width: screenX * 0.4,
+					backgroundColor: bgColor,
 				}}
 			>
 				{/* Pokemon's name and id  */}
