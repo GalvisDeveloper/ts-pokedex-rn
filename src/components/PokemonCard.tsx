@@ -98,7 +98,7 @@ const localStyles = StyleSheet.create({
 		width: 100,
 		height: 100,
 		position: 'absolute',
-		right: -25,
+		right: -15,
 	},
 	pokeCt: {
 		width: 100,

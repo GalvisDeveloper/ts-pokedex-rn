@@ -1,21 +1,26 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
-import { Button, Image, StyleSheet, Text, View } from 'react-native';
-import { RootStackParams } from '../navigation/Navigator';
-import { TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/Ionicons';
 import FadeInImage from '../components/FadeInImage';
+import usePokemon from '../hooks/usePokemon';
+import { RootStackParams } from '../navigation/Navigator';
+import PokemonDetails from '../components/PokemonDetails';
 
 interface Props extends StackScreenProps<RootStackParams, 'Pokemon'> {}
 
 const PokemonScreen = ({ navigation, route }: Props) => {
 	const { simplePokemon, color } = route.params;
-
+	const { id, name, picture } = simplePokemon;
 	const { top } = useSafeAreaInsets();
 
+	const { pokemon, isLoading } = usePokemon(id);
+
+	console.log(pokemon);
+
 	return (
-		<View>
+		<View style={{ flex: 1 }}>
 			<View
 				style={{
 					...localStyles.headerContainer,
@@ -30,14 +35,22 @@ const PokemonScreen = ({ navigation, route }: Props) => {
 					<Icon name='arrow-back-outline' size={30} color='white' />
 				</TouchableOpacity>
 				<Text style={{ ...localStyles.pokemonName, top: top + 50 }}>
-					{simplePokemon.name + '\n'} #{simplePokemon.id}
+					{name + '\n'} #{id}
 				</Text>
 
 				{/* White pokeball */}
 				<Image source={require('../assets/pokebola-blanca.png')} style={{ ...localStyles.pokeball }} />
 
-                <FadeInImage uri={simplePokemon.picture} style={localStyles.pokeballImage} />
+				<FadeInImage uri={picture} style={localStyles.pokeballImage} />
 			</View>
+
+			{isLoading ? (
+				<View style={{ ...localStyles.loadingIndicator }}>
+					<ActivityIndicator color={color} size={50} />
+				</View>
+			) : (
+				<PokemonDetails pokemon={pokemon} />
+			)}
 		</View>
 	);
 };
@@ -66,15 +79,16 @@ const localStyles = StyleSheet.create({
 		width: 250,
 		height: 250,
 		bottom: -20,
-		// opacity: 0.7,
-		// position: 'absolute',
-		// zIndex: -1,
-		// transform: [{ rotate: '-20deg' }],
 	},
-    pokeballImage : { 
-        width: 250,
-        height: 250,
-        position: 'absolute',
-        bottom: -15,
-    }
+	pokeballImage: {
+		width: 250,
+		height: 250,
+		position: 'absolute',
+		bottom: -15,
+	},
+	loadingIndicator: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
 });
