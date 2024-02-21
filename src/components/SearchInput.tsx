@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, TextInput, Touchable, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import useDebouncedValue from '../hooks/useDebouncedValue';
 
 interface Props {
-	onPress: () => void;
-	styles?: object;
+	onPress?: () => void;
+	style?: object;
 }
 
-const SearchInput = ({ onPress, styles }: Props) => {
+const SearchInput = ({ onPress, style }: Props) => {
+	const [textValue, setTextValue] = useState('');
+
+	const { debouncedValue } = useDebouncedValue(textValue, 500);
+
+	useEffect(() => {
+		// console.log(debouncedValue);
+	}, [debouncedValue]);
+
 	return (
-		<View style={{ ...localStyles.ct }}>
+		<View style={{ ...localStyles.ct, ...style }}>
 			<View style={{ ...localStyles.textBg }}>
 				<TextInput
 					placeholder='Search...'
@@ -17,15 +26,11 @@ const SearchInput = ({ onPress, styles }: Props) => {
 					autoCapitalize='none'
 					autoCorrect={false}
 					placeholderTextColor={'grey'}
+					value={textValue}
+					onChangeText={setTextValue}
 				/>
 
-				<TouchableOpacity
-					activeOpacity={0.8}
-					style={{ marginLeft: 10 }}
-					onPress={() => {
-						console.log('search');
-					}} // TODO: Implement search functionality
-				>
+				<TouchableOpacity activeOpacity={0.8} style={{ marginLeft: 10 }} onPress={onPress}>
 					<Icon name='search-outline' color='grey' size={30} />
 				</TouchableOpacity>
 			</View>
