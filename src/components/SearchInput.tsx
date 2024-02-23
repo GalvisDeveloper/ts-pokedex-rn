@@ -14,7 +14,6 @@ const SearchInput = ({ onPress, style }: Props) => {
 	const { debouncedValue } = useDebouncedValue(textValue, 500);
 
 	useEffect(() => {
-		// console.log(debouncedValue);
 	}, [debouncedValue]);
 
 	return (
