@@ -36,7 +36,10 @@ const PokemonCard = ({ pokemon }: Props) => {
 	};
 
 	return (
-		<TouchableOpacity activeOpacity={0.9} onPress={() => navigator.navigate('Pokemon', { simplePokemon: pokemon, color: bgColor })}>
+		<TouchableOpacity
+			activeOpacity={0.9}
+			onPress={() => navigator.navigate('Pokemon', { simplePokemon: pokemon, color: bgColor })}
+		>
 			<View
 				style={{
 					...localStyles.cardCt,

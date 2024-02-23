@@ -2,15 +2,16 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen';
 import PokemonScreen from '../screens/PokemonScreen';
 import { SimplePokemon } from '../interfaces/pokemonInterfaces';
+import SearchScreen from '../screens/SearchScreen';
 
 export type RootStackParams = {
-	Home: undefined;
+	Search: undefined;
 	Pokemon: { simplePokemon: SimplePokemon; color: string };
 };
 
 const Stack = createStackNavigator<RootStackParams>();
 
-const Navigator = () => {
+const NavigatorSearch = () => {
 	return (
 		<Stack.Navigator
 			screenOptions={{
@@ -20,13 +21,10 @@ const Navigator = () => {
 				// cardOverlayEnabled: true,
 			}}
 		>
-			<Stack.Screen name='Home' component={HomeScreen} />
+			<Stack.Screen name='Search' component={SearchScreen} />
 			<Stack.Screen name='Pokemon' component={PokemonScreen} />
-			{/* <Stack.Screen name='Notifications' component={Notifications} />
-			<Stack.Screen name='Profile' component={Profile} />
-			<Stack.Screen name='Settings' component={Settings} /> */}
 		</Stack.Navigator>
 	);
 };
 
-export default Navigator;
+export default NavigatorSearch;

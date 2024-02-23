@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, TextInput, Touchable, TouchableOpacity, View } from 'react-native';
+import { StyleProp, StyleSheet, TextInput, Touchable, TouchableOpacity, View, ViewStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import useDebouncedValue from '../hooks/useDebouncedValue';
 
 interface Props {
-	onPress?: () => void;
-	style?: object;
+	onDebounce: (value: string) => void;
+	style?: StyleProp<ViewStyle>;
 }
 
-const SearchInput = ({ onPress, style }: Props) => {
+const SearchInput = ({ onDebounce, style }: Props) => {
 	const [textValue, setTextValue] = useState('');
 
 	const { debouncedValue } = useDebouncedValue(textValue, 500);
 
 	useEffect(() => {
+		onDebounce(debouncedValue);
 	}, [debouncedValue]);
 
 	return (
-		<View style={{ ...localStyles.ct, ...style }}>
+		<View style={{ ...localStyles.ct, ...style as any}}>
 			<View style={{ ...localStyles.textBg }}>
 				<TextInput
 					placeholder='Search...'
@@ -29,7 +30,7 @@ const SearchInput = ({ onPress, style }: Props) => {
 					onChangeText={setTextValue}
 				/>
 
-				<TouchableOpacity activeOpacity={0.8} style={{ marginLeft: 10 }} onPress={onPress}>
+				<TouchableOpacity activeOpacity={0.8} style={{ marginLeft: 10 }} >
 					<Icon name='search-outline' color='grey' size={30} />
 				</TouchableOpacity>
 			</View>

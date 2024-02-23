@@ -34,8 +34,6 @@ const usePokemonSearch = () => {
 	return {
 		arrSimplePokemon,
 		isFetching,
-
-		loadPokemons,
 	};
 };
 

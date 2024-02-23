@@ -1,56 +1,13 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { ParamListBase, RouteProp } from '@react-navigation/native';
+import { Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import SearchScreen from '../screens/SearchScreen';
-import Navigator from './Navigator';
-import { Platform } from 'react-native';
+import NavigatorHome from './NavigatorHome';
+import NavigatorSearch from './NavigatorSearch';
 
 const TabIos = createBottomTabNavigator();
 // const TabAndroid = createMaterialBottomTabNavigator();
-
-enum RouteTypes {
-	Navigator = 'Navigator',
-	SearchScreen = 'SearchScreen',
-}
-
-const ROUTES = {
-	[RouteTypes.Navigator]: 'list-outline',
-	[RouteTypes.SearchScreen]: 'search-outline',
-};
-
-type TabBarIconProps = {
-	focused: boolean;
-	color: string;
-};
-
-// export const BottomTabs = (props: any) => {
-// 	return Platform.OS === 'ios' ? <BottomTabsIOS {...props} /> : <BottomTabsAndroid {...props} />;
-// };
-
-const TabIcons = (route: RouteProp<ParamListBase, string>, props: TabBarIconProps) => {
-	let iconName: RouteTypes = (route.name as RouteTypes) || '';
-	return <Icon name={ROUTES[iconName]} />;
-};
-
-// const BottomTabsAndroid = () => {
-// 	return (
-// 		<TabAndroid.Navigator
-// 			sceneAnimationEnabled={true}
-// 			barStyle={{
-// 				backgroundColor: '#fff',
-// 			}}
-// 			screenOptions={({ route }) => ({
-// 				tabBarIcon: (props) => {
-// 					return TabIcons(route, props);
-// 				},
-// 			})}
-// 		>
-// 			<TabAndroid.Screen name='Navigator' options={{ title: 'Icons' }} component={Navigator} />
-// 			<TabAndroid.Screen name='SearchScreen' options={{ title: 'Chats' }} component={SearchScreen} />
-// 		</TabAndroid.Navigator>
-// 	);
-// };
 
 export const Tabs = () => {
 	return (
@@ -71,26 +28,24 @@ export const Tabs = () => {
 					height: Platform.OS === 'ios' ? 80 : 60,
 				},
 				headerShown: false,
-				// tabBarIcon: (props) => {
-				// 	return TabIcons(route, props);
-				// },
 			})}
 		>
 			<TabIos.Screen
 				name='Navigator'
 				options={{
-					tabBarLabel: 'Navigator',
+					tabBarLabel: 'Pokemons',
 					tabBarIcon: ({ color }) => <Icon name='list-outline' size={25} color={color} />,
 				}}
-				component={Navigator}
+				component={NavigatorHome}
 			/>
+
 			<TabIos.Screen
 				name='SearchScreen'
 				options={{
 					tabBarLabel: 'Search',
 					tabBarIcon: ({ color }) => <Icon name='search-outline' size={25} color={color} />,
 				}}
-				component={SearchScreen}
+				component={NavigatorSearch}
 			/>
 		</TabIos.Navigator>
 	);

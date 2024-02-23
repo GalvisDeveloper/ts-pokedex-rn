@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import FadeInImage from '../components/FadeInImage';
 import usePokemon from '../hooks/usePokemon';
-import { RootStackParams } from '../navigation/Navigator';
+import { RootStackParams } from '../navigation/NavigatorHome';
 import PokemonDetails from '../components/PokemonDetails';
 
 interface Props extends StackScreenProps<RootStackParams, 'Pokemon'> {}
